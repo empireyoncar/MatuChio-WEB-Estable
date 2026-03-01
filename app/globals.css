@@ -1,0 +1,26 @@
+/* eslint-disable */ 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.remove-arrow::-webkit-inner-spin-button, 
+.remove-arrow::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+} 
+
+body {
+  cursor: url('/img/cursor/Cursor.png'), auto;
+}
+
+button:hover, .news-body:hover {
+  cursor: url('/img/cursor/CursorGet.png'), auto;
+}
+
+a:hover {
+  cursor: url('/img/cursor/CursorGet.png'), auto;
+}
+
+p {
+    white-space: pre;
+} 
