@@ -12,15 +12,6 @@ jobs:
     - name: Descargar el repositorio
       uses: actions/checkout@v3
 
-    - name: Configurar SSH
-      run: |
-        mkdir -p ~/.ssh
-        cat << 'EOF' > ~/.ssh/id_ed25519
-${{ secrets.SSH_PRIVATE_KEY }}
-EOF
-        chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan -H 88.8.43.131 >> ~/.ssh/known_hosts
-
     - name: Actualizar código en el servidor
       run: |
         ssh -p 2222 empire@88.8.43.131 "cd ~/Documentos/github/MatuChio-WEB-Estable && git pull"
