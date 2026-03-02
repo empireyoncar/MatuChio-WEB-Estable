@@ -15,10 +15,12 @@ jobs:
     - name: Configurar SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        cat << 'EOF' > ~/.ssh/id_ed25519
+        ${{ secrets.SSH_PRIVATE_KEY }}
+        EOF
         chmod 600 ~/.ssh/id_ed25519
         ssh-keyscan -H 88.8.43.131 >> ~/.ssh/known_hosts
 
     - name: Actualizar código en el servidor
       run: |
-        ssh empire@88.8.43.131 "cd ~/Documentos/github/MatuChio-WEB-Estable && git pull"
+        ssh -p 2222 empire@88.8.43.131 "cd ~/Documentos/github/MatuChio-WEB-Estable && git pull"
