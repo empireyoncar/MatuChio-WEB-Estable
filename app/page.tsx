@@ -1,14 +1,10 @@
 export default function Home() {
   return (
     <div>
-      <div style={{ width: "350px", height: "250px", overflow: "hidden" }}>
-  <iframe
-    src="/proyectos/slider3d/dist/index.html"
-    width="100%"
-    height="100%"
-    style={{ border: "none" }}
-  />
-  </div>
+      <a href="/proyectos/slider3d/dist/index.html" target="_blank">
+  Ver proyecto 3D Slider
+      </a>
+
 
     </div>
   );
