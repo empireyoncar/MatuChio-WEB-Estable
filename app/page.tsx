@@ -51,14 +51,14 @@ export default function Home() {
         }}
       >
         <iframe
-          src="/proyectos/Galeria-proyectos/dist/index.html"
+          src="/proyectos/Galeriaproyectos/dist/index.html"
           style={{ width: "100%", height: "200px", border: "none" }}
         />
 
         <div style={{ padding: "15px" }}>
           <h3 style={{ margin: "0 0 8px 0" }}>GSAP FLIP Image Grid</h3>
           <a
-            href="/proyectos/Galeria-proyectos/dist/index.html"
+            href="/proyectos/Galeriaproyectos/dist/index.html"
             target="_blank"
             style={{
               textDecoration: "none",
