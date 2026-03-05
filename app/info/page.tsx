@@ -9,12 +9,15 @@ export default function Info() {
       <h1 className='mt-10 font-bold text-3xl text-primary mb-4'>Server Information</h1>
       <p>Season: 6 Episode 3</p>
       <p>
-        <span>Experience:</span>  500x
+        <span>Experience:</span>  1x
       </p>
       <p>
-        <span>Drop Rate Excellent:</span> 50%
+        <span>Drop Rate Excellent:</span> 0.01%
       </p>
-      <p><span>Drpo Rate Zen:</span> 70%</p>
+      <p><span>Drpo Rate Zen:</span> 10%</p>
+      <p>
+        </p>
+      <p><span>Drpo rate items:</span> 3%</p>
       <p>
         <span>Party Bonus Exp: </span> 25%, 30%, 50%
       </p>
