@@ -23,6 +23,7 @@ export default function Download() {
           {(mfLink && mfLink !== "") && <Link href={process.env.NEXT_PUBLIC_MEDIAFIRE_LINK!}><Image src={mediafire} width={180} quality={100} alt={"mediafire"}/></Link>}
           {(megaLink && megaLink !== "") && <Link href={process.env.NEXT_PUBLIC_MEGA_LINK!}><Image src={mega} width={180} quality={100} alt={"mega"}/></Link>}          
         </div>
+         <p className="text-lg text-primary">actualmente la IP publica cambia cada vez que hay problemas de electricidad y se apaga. IP: 88.8.43.131 Port: 55901 </p>
       </div>
       <div className="mt-8">
         <h2 className="text-2xl text-primary">Utilities</h2>
