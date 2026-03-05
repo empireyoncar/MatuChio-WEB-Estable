@@ -18,13 +18,13 @@ export default function Download() {
         <h2 className="text-2xl text-primary">Client Downloads</h2>
         <hr className="border-t-2 border-slate-300"/>
         <p className="text-lg text-primary">Downlaod the client for free</p>
+        <p className="text-lg text-primary">IP Publica para conectarte es IP: 88.8.43.131 Port: 55901</p>
         <div className="flex gap-10 mt-10">
           {(gdLink && gdLink !== "")&& <Link href={process.env.NEXT_PUBLIC_GOODLE_DRIVE_LINK!}><Image src={google} width={180} quality={100} alt={"google_drive"} /></Link>}
           {(mfLink && mfLink !== "") && <Link href={process.env.NEXT_PUBLIC_MEDIAFIRE_LINK!}><Image src={mediafire} width={180} quality={100} alt={"mediafire"}/></Link>}
           {(megaLink && megaLink !== "") && <Link href={process.env.NEXT_PUBLIC_MEGA_LINK!}><Image src={mega} width={180} quality={100} alt={"mega"}/></Link>}          
         </div>
-         <p className="text-lg text-primary">actualmente la IP publica cambia cada vez que hay problemas de electricidad y se apaga. IP: 88.8.43.131 Port: 55901 </p>
-      </div>
+          </div>
       <div className="mt-8">
         <h2 className="text-2xl text-primary">Utilities</h2>
         <hr className="border-t-2 border-slate-300"/>
