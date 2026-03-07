@@ -24,7 +24,7 @@ export default function Info() {
       <p><span>Elf Soldier Buff:</span> Up to level 250 and 1 reset.</p>
       <p><span>Limited Connections:</span> Maximum of 2 accounts on same IP/HWID.</p>
       <p>Shops for a low exp server.</p>
-      <p className='whitespace-normal'>Play2Win System: No Web-Shop, no Cash-Shop, only VIP System (without VIP Server) & Web-Credits for Premium Modules.</p>
+      <p className='whitespace-normal'>Puedes la comprar mascota PET Rudolf te da: +15% exp, +15% atack, +25 defense. 10 euros al mes</p>
       <div className='mt-8'>
           <span className='text-xl font-semibold'>MU Introduction</span> <br />
           <br />
