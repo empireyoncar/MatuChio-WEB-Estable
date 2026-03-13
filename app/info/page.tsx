@@ -22,9 +22,9 @@ export default function Info() {
         <span>Party Bonus Exp: </span> 25%, 30%, 50%
       </p>
       <p><span>Elf Soldier Buff:</span> Up to level 250 and 1 reset.</p>
-      <p><span>Limited Connections:</span> Maximum of 2 accounts on same IP/HWID.</p>
-      <p>Shops for a low exp server.</p>
-      <p className='whitespace-normal'>Puedes la comprar mascota PET Rudolf te da: +15% exp, +15% atack, +25 defense. 10 euros al mes</p>
+      <p><span>Limited Connections:</span> Maximum of 5 accounts on same IP/HWID.</p>
+      <p className='whitespace-normal'>Puedes comprar la mascota Rudolf te da: +15% exp, +15% atack, +25 defense. 10 euros al mes cuando finalice se te eliminara</p>
+      <p>comprando la mascota Ayudas a todo lo que se necesite en el servidor https://sites.google.com/view/empireyoncar/mascota-rudolf</p>
       <div className='mt-8'>
           <span className='text-xl font-semibold'>MU Introduction</span> <br />
           <br />
