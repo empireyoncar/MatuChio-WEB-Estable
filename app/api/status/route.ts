@@ -2,19 +2,20 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    // Fallback por si la variable no carga en producción
     const GAME_URL = process.env.GAMESERVER_URL || "http://192.168.1.178:8081";
+
+    console.log("URL USADA:", GAME_URL);
 
     const res = await fetch(`${GAME_URL}/api/status`);
 
     if (!res.ok) {
+      console.log("FETCH ERROR:", res.status);
       return NextResponse.json(
         { error: "GameServer unreachable" },
         { status: 500 }
       );
     }
 
-    // Intentamos leer JSON, pero Node 18 a veces devuelve string o vacío
     let raw: any;
 
     try {
@@ -25,36 +26,31 @@ export async function GET() {
       } else {
         raw = data;
       }
-    } catch {
+
+      console.log("RAW DATA:", raw);
+
+    } catch (err) {
+      console.log("JSON PARSE ERROR:", err);
       raw = {};
     }
 
-    // Normalizamos playersList
     let playersList: any[] = [];
 
     if (Array.isArray(raw.playersList)) {
       playersList = raw.playersList;
-    } else if (
-      typeof raw.playersList === "string" &&
-      raw.playersList.trim() !== ""
-    ) {
-      playersList = [];
     }
 
     return NextResponse.json(
       {
         playersList,
         players: raw.players ?? 0,
-
-        // Compatibilidad con ambos formatos:
-        // - state === "Online"
-        // - online === true
         online: raw.state === "Online" || raw.online === true
       },
       { status: 200 }
     );
 
   } catch (err) {
+    console.log("GENERAL ERROR:", err);
     return NextResponse.json(
       { error: "Internal error" },
       { status: 500 }
