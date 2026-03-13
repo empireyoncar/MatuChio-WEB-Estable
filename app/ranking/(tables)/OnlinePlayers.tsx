@@ -1,55 +1,42 @@
 "use client"
 import { CharacterOnline } from "@/app/_models/characterOnline"
-import { useEffect, useState } from "react"
 import { getImage } from '@/app/_utils/characterAvatarReturn';
 import Image from "next/image"
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import MapsEnum from "@/app/_utils/mapEnum";
-import { toast } from "react-toastify";
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function OnlinePlayers() {
-    const [characters, setCharacters] = useState<CharacterOnline[]>([])
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const statusRes = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/status`);
+  // SWR refresca cada 5 segundos sin cargar el servidor
+  const { data: serverStatus } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/api/status`,
+    fetcher,
+    { refreshInterval: 5000 }
+  );
 
-            if (!statusRes.ok) {
-              toast.error("There was a problem trying to find the online users. Try again later.")
-              return;
-            }
+  const { data: characters } = useSWR(
+    serverStatus ? `${process.env.NEXT_PUBLIC_URL}/api/characters/ranking/online` : null,
+    async () => {
+      const body = { playersList: serverStatus.playersList ?? [] };
 
-            // Puede venir como STRING → lo convertimos
-            let serverStatus = await statusRes.json();
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/characters/ranking/online`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        }
+      );
 
-            if (typeof serverStatus === "string") {
-              serverStatus = JSON.parse(serverStatus);
-            }
+      return res.json();
+    },
+    { refreshInterval: 5000 }
+  );
 
-            // Solo necesitamos playersList
-            const body = {
-              playersList: serverStatus.playersList ?? []
-            };
-
-            const result = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/characters/ranking/online`, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify(body)
-            });
-
-            const final = await result.json();
-            setCharacters(final);
-
-          } catch (e) {
-            toast.error("There was a problem! Try again later")
-          }
-        };
-
-        fetchData();
-    }, []);
+  if (!characters) return <p className="text-center mt-5">Loading...</p>;
 
   return (
     <div className="w-full flex flex-col gap-5 mx-auto mt-2">
@@ -63,7 +50,7 @@ export default function OnlinePlayers() {
           </tr>
         </thead>
         <tbody>
-        {characters.map((c, i) => (
+        {characters.map((c: CharacterOnline, i: number) => (
           <tr key={c.Name} className="border-b-2 border-slate-300">
             <td className='text-start text-slate-700 font-bold pb-3.5 pl-3 pt-3'>{i+1}</td>
             <td className='text-start font-normal text-primary pb-3.5 pt-3'>
