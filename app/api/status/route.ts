@@ -6,7 +6,9 @@ export async function GET() {
 
     console.log("URL USADA:", GAME_URL);
 
-    const res = await fetch(`${GAME_URL}/api/status`);
+    const res = await fetch(`${GAME_URL}/api/status`, {
+      cache: "no-store" // IMPORTANTE: evita cache en producción
+    });
 
     if (!res.ok) {
       console.log("FETCH ERROR:", res.status);
@@ -19,31 +21,30 @@ export async function GET() {
     let raw: any;
 
     try {
-      const data = await res.json();
-
-      if (typeof data === "string") {
-        raw = data.trim() === "" ? {} : JSON.parse(data);
-      } else {
-        raw = data;
-      }
-
+      raw = await res.json();
       console.log("RAW DATA:", raw);
-
     } catch (err) {
       console.log("JSON PARSE ERROR:", err);
       raw = {};
     }
 
+    // 🔥 Detectamos automáticamente la lista de jugadores
     let playersList: any[] = [];
 
     if (Array.isArray(raw.playersList)) {
       playersList = raw.playersList;
+    } else if (Array.isArray(raw.onlinePlayers)) {
+      playersList = raw.onlinePlayers;
+    } else if (Array.isArray(raw.characters)) {
+      playersList = raw.characters.map((c: any) => c.Name);
+    } else if (Array.isArray(raw.players)) {
+      playersList = raw.players;
     }
 
     return NextResponse.json(
       {
         playersList,
-        players: raw.players ?? 0,
+        players: playersList.length,
         online: raw.state === "Online" || raw.online === true
       },
       { status: 200 }
