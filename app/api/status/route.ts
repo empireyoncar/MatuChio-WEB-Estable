@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const res = await fetch(`${process.env.GAMESERVER_URL}/api/status`);
+    // Fallback por si la variable no carga en producción
+    const GAME_URL = process.env.GAMESERVER_URL || "http://192.168.1.178:8081";
+
+    const res = await fetch(`${GAME_URL}/api/status`);
 
     if (!res.ok) {
       return NextResponse.json(
@@ -18,17 +21,15 @@ export async function GET() {
       const data = await res.json();
 
       if (typeof data === "string") {
-        // Si viene vacío → lo convertimos en objeto vacío
         raw = data.trim() === "" ? {} : JSON.parse(data);
       } else {
         raw = data;
       }
     } catch {
-      // Si falla el parseo → devolvemos objeto vacío
       raw = {};
     }
 
-    // Normalizamos playersList para evitar [""] o strings
+    // Normalizamos playersList
     let playersList: any[] = [];
 
     if (Array.isArray(raw.playersList)) {
@@ -37,7 +38,6 @@ export async function GET() {
       typeof raw.playersList === "string" &&
       raw.playersList.trim() !== ""
     ) {
-      // Si viene como string no vacío → lo ignoramos y devolvemos []
       playersList = [];
     }
 
@@ -45,7 +45,11 @@ export async function GET() {
       {
         playersList,
         players: raw.players ?? 0,
-        online: raw.state === "Online"
+
+        // Compatibilidad con ambos formatos:
+        // - state === "Online"
+        // - online === true
+        online: raw.state === "Online" || raw.online === true
       },
       { status: 200 }
     );
