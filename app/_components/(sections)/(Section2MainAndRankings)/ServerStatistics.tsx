@@ -17,7 +17,7 @@ export default function ServerStatistics() {
       } catch (e) {
         console.log("Couldn't connect to the gameserver");
       }
-    }, 1000); // Refresca cada segundo
+    }, 5000); // Refresca cada 5 segundos
 
     return () => clearInterval(interval);
   }, []);
