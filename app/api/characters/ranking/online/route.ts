@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// 🔥 Evita que Next.js cachee este endpoint
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function POST(req: Request) {
   try {
     const { playersList } = await req.json();
@@ -24,7 +28,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(characters, { status: 200 });
 
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }
