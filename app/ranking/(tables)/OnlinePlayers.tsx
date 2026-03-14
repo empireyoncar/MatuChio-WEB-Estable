@@ -17,7 +17,7 @@ export default function OnlinePlayers() {
     { refreshInterval: 1000 }
   );
 
-  // 🔥 KEY dinámica: depende de la lista de jugadores
+  // KEY dinámica: depende de la lista de jugadores online
   const { data: characters } = useSWR(
     serverStatus ? ["onlinePlayers", serverStatus.playersList] : null,
     async () => {
