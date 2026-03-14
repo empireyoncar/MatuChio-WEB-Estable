@@ -10,29 +10,32 @@ const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(res => r
 
 export default function OnlinePlayers() {
 
-  // Refresca cada 1 segundo
+  // SWR refresca cada 5 segundos sin cargar el servidor
   const { data: serverStatus } = useSWR(
     "/api/status",
     fetcher,
     { refreshInterval: 1000 }
   );
 
-  // KEY dinámica: depende de la lista de jugadores online
+  // SIEMPRE refresca, sin depender de serverStatus
   const { data: characters } = useSWR(
-    serverStatus ? ["onlinePlayers", serverStatus.playersList] : null,
+    "/api/characters/ranking/online",
     async () => {
-      const body = { playersList: serverStatus?.playersList ?? [] };
+      const body = { playersList: serverStatus.playersList ?? [] };
 
-      const res = await fetch("/api/characters/ranking/online", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        cache: "no-store",
-        body: JSON.stringify(body)
-      });
+      const res = await fetch(
+        "/api/characters/ranking/online",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+          body: JSON.stringify(body)
+        }
+      );
 
       return res.json();
     },
-    { refreshInterval: 1000 }
+    { refreshInterval: 5000 }
   );
 
   if (!characters) return <p className="text-center mt-5">Loading...</p>;
