@@ -10,13 +10,14 @@ const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(res => r
 
 export default function OnlinePlayers() {
 
-  // SWR refresca cada 5 segundos sin cargar el servidor
+  // Refresca el estado del servidor cada 1 segundo
   const { data: serverStatus } = useSWR(
     "/api/status",
     fetcher,
     { refreshInterval: 1000 }
   );
 
+  // Refresca los jugadores online cada 1 segundo (ANTES eran 5 segundos)
   const { data: characters } = useSWR(
     serverStatus ? "/api/characters/ranking/online" : null,
     async () => {
@@ -34,7 +35,7 @@ export default function OnlinePlayers() {
 
       return res.json();
     },
-    { refreshInterval: 5000 }
+    { refreshInterval: 1000 }   // 🔥 AHORA SÍ SE ACTUALIZA CADA 1 SEGUNDO
   );
 
   if (!characters) return <p className="text-center mt-5">Loading...</p>;
