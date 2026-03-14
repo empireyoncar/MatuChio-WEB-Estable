@@ -9,7 +9,6 @@ import OnlinePlayers from "./(tables)/OnlinePlayers";
 export default function Ranking() {
   const [selectedRanking, setSelectedRanking] = useState<string>('topLevel')
 
-  //on clicke cheanges the current ranking showing
   const changeRanking = (event: SyntheticEvent) => {
     const id = (event.target as HTMLElement).id;
     setSelectedRanking(id);

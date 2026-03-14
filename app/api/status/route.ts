@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+// 🔥 Fuerza a Next.js a NO cachear este endpoint
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const GAME_URL = process.env.GAMESERVER_URL || "http://192.168.1.178:8081";
@@ -7,7 +11,7 @@ export async function GET() {
     console.log("URL USADA:", GAME_URL);
 
     const res = await fetch(`${GAME_URL}/api/status`, {
-      cache: "no-store" // IMPORTANTE: evita cache en producción
+      cache: "no-store" // evita cache del fetch
     });
 
     if (!res.ok) {
@@ -28,7 +32,7 @@ export async function GET() {
       raw = {};
     }
 
-    // 🔥 Detectamos automáticamente la lista de jugadores
+    // Detectamos automáticamente la lista de jugadores
     let playersList: any[] = [];
 
     if (Array.isArray(raw.playersList)) {
