@@ -17,9 +17,8 @@ export default function OnlinePlayers() {
     { refreshInterval: 1000 }
   );
 
-  // SIEMPRE refresca, sin depender de serverStatus
   const { data: characters } = useSWR(
-    "/api/characters/ranking/online",
+    serverStatus ? "/api/characters/ranking/online" : null,
     async () => {
       const body = { playersList: serverStatus.playersList ?? [] };
 
