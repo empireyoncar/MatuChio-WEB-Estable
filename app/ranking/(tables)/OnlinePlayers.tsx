@@ -17,25 +17,20 @@ export default function OnlinePlayers() {
     { refreshInterval: 1000 }
   );
 
-  // Refresca los jugadores online cada 1 segundo (ANTES eran 5 segundos)
+  // Refresca los jugadores online cada 1 segundo
   const { data: characters } = useSWR(
-    serverStatus ? "/api/characters/ranking/online" : null,
-    async () => {
-      const body = { playersList: serverStatus.playersList ?? [] };
-
-      const res = await fetch(
-        "/api/characters/ranking/online",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          cache: "no-store",
-          body: JSON.stringify(body)
-        }
-      );
+    serverStatus ? ["/api/characters/ranking/online", serverStatus.playersList] : null,
+    async ([url, playersList]) => {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+        body: JSON.stringify({ playersList })
+      });
 
       return res.json();
     },
-    { refreshInterval: 1000 }   // 🔥 AHORA SÍ SE ACTUALIZA CADA 1 SEGUNDO
+    { refreshInterval: 1000 }
   );
 
   if (!characters) return <p className="text-center mt-5">Loading...</p>;
