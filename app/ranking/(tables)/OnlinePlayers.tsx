@@ -6,27 +6,28 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import MapsEnum from "@/app/_utils/mapEnum";
 import useSWR from "swr";
 
-const fetcher = (url: string) => fetch(url).then(res => res.json());
+const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(res => res.json());
 
 export default function OnlinePlayers() {
 
   // SWR refresca cada 5 segundos sin cargar el servidor
   const { data: serverStatus } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/api/status`,
+    "/api/status",
     fetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: 1000 }
   );
 
   const { data: characters } = useSWR(
-    serverStatus ? `${process.env.NEXT_PUBLIC_URL}/api/characters/ranking/online` : null,
+    serverStatus ? "/api/characters/ranking/online" : null,
     async () => {
       const body = { playersList: serverStatus.playersList ?? [] };
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/characters/ranking/online`,
+        "/api/characters/ranking/online",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          cache: "no-store",
           body: JSON.stringify(body)
         }
       );
