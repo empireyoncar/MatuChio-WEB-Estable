@@ -69,7 +69,8 @@ export default function Home() {
             Ver proyecto completo →
           </a>
         </div>
-        <h3 style={{ margin: "0 0 8px 0" }}>actualmente hay un tormenta y mi ip publcia ha cambiado constantemente</h3>
+        <h3 style={{ margin: "0 0 8px 0" }}>
+          NOTA para Jugadores disculpas: actualmente hay un tormenta en mi casa y mi ip publica ha cambiado constantemente</h3>
       </div>
     </div>
   );
