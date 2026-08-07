@@ -18,7 +18,7 @@ export default function Download() {
         <h2 className="text-2xl text-primary">Client Downloads</h2>
         <hr className="border-t-2 border-slate-300"/>
         <p className="text-lg text-primary">Video de como ejecutar el mu https://youtu.be/FT0zDNucSaI</p>
-        <p className="text-lg text-primary">IP Publica para conectarte es IP: 83.59.69.95 Port: 55901</p>
+        <p className="text-lg text-primary">IP Publica para conectarte es IP: 88.8.39.249 Port: 55901</p>
         <div className="flex gap-10 mt-10">
           {(gdLink && gdLink !== "")&& <Link href={process.env.NEXT_PUBLIC_GOODLE_DRIVE_LINK!}><Image src={google} width={180} quality={100} alt={"google_drive"} /></Link>}
           {(mfLink && mfLink !== "") && <Link href={process.env.NEXT_PUBLIC_MEDIAFIRE_LINK!}><Image src={mediafire} width={180} quality={100} alt={"mediafire"}/></Link>}
